@@ -11,6 +11,5 @@
     },
     "outDir": "./ts-dist",
     "rootDir": "./src",
-    "declaration": true,
   }
 }
