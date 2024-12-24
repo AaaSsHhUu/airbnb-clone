@@ -8,6 +8,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "outDir": "./ts-dist",
+    "rootDir": "./src",
+    "declaration": true,
   }
 }
