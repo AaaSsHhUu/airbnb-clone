@@ -6,6 +6,9 @@
   @apply px-3 py-3 text-sm font-sans text-center font-semibold hover:bg-gray-100;
 }
 
+html{
+  scroll-behavior: smooth;
+}
 /* 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

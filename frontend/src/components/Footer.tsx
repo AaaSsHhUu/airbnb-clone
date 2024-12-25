@@ -8,7 +8,7 @@ function Footer() {
     const thirdCol = ['Newsroom', 'New features', 'Careers', 'Investors', 'Airbnb.org emergency stays'];
 
     return (
-        <div className="min-h-[50vh] w-full bg-gray-200 mt-10">
+        <footer id="footer" className="min-h-[50vh] w-full bg-gray-200 mt-10">
             <div className="px-8 pt-6 w-full flex flex-col gap-2">
                 <div className="grid gap-3 md:grid-cols-3">
                     <div className="flex flex-col gap-2">
@@ -64,7 +64,7 @@ function Footer() {
                     </div>
                 </div>
             </div>
-        </div>
+        </footer>
     )
 }
 
