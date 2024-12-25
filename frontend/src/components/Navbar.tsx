@@ -4,12 +4,14 @@ import { MouseEvent, useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom";
 import { Signup, FilterDrawer, Login } from "@/components";
 import { FaSearch } from "react-icons/fa";
+import {CiLogin} from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { Button } from "./ui/button";
 import { userExist, userNotExist } from "@/redux/reducer/userReducer";
 import toast from "react-hot-toast";
 import { getCurrentUser, useLogoutMutation } from "@/redux/api/userApi";
+import { FloatingNav } from "./ui/floating-navbar";
 
 function Navbar() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -67,6 +69,22 @@ function Navbar() {
     }
   }
 
+  const navLinks = [
+    {
+      name : "Signup",
+      link : "/signup",
+      // icon : 
+    },
+    {
+      name : "Login",
+      link : "/login",
+    },
+    {
+      name : "Help center",
+      link : "#"
+    },
+  ]
+
   return (
     <nav className="w-screen relative shadow-md">
       <div className="hidden border-b fixed bg-white top-0 left-0 z-20 px-4 py-3 lg:px-8 lg:py-3 md:flex justify-between items-center w-full">
@@ -111,7 +129,7 @@ function Navbar() {
             <div className="w-full list-none">
               <li className="dialog-link"><a href="#">Your Listings</a></li>
               <li className="dialog-link"><a href="#">Host an experience</a></li>
-              <li className="dialog-link"><a href="#">Help centre</a></li>
+              <li className="dialog-link"><a href="#footer">Help centre</a></li>
               {!user && <Separator />}
               { user ?
                 <li className="w-full flex justify-center my-2">
@@ -134,6 +152,7 @@ function Navbar() {
               <FaSearch size={22} />
               <input type="text" className="w-full border-none outline-none h-full" placeholder="Where to ?" />
           </div>
+          <FloatingNav  navItems={navLinks}/>
 
           <FilterDrawer />
       </div>
