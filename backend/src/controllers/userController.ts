@@ -65,11 +65,11 @@ export const login = asyncHandler(async (req : Request, res : Response) => {
     throw new ApiError(404, "User not registered, Please sign-up first");
   }
 
-  const isPasswordCorrect = isUserRegistered.isPasswordCorrect(password);
+  const isPasswordCorrect = await isUserRegistered.isPasswordCorrect(password);
   if(!isPasswordCorrect){
     throw new ApiError(400, "Invalid email or password");
   }
-
+  
   const accessToken = await isUserRegistered.generateToken();
   // console.log("token after login : ", accessToken);
 

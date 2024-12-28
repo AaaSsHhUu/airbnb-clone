@@ -4,7 +4,6 @@ import { MouseEvent, useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom";
 import { Signup, FilterDrawer, Login } from "@/components";
 import { FaSearch } from "react-icons/fa";
-import {CiLogin} from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { Button } from "./ui/button";

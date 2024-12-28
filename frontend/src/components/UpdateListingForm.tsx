@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { useListingDetailsQuery, useUpdateListingdetailsMutation } from "@/redux/api/listingApi";
 import toast from "react-hot-toast";
 import { ChangeEvent, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 interface FormData {
     title ?: string;
@@ -29,7 +29,7 @@ function UpdateListingForm() {
 
     const {id} = useParams();
     if(!id){
-        return navigate("/");
+        return <Navigate to={"/"} />
     }
 
     const {data} = useListingDetailsQuery(id);

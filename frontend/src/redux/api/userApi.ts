@@ -43,7 +43,6 @@ export const getCurrentUser = async () => {
     const response = await axios.get(`${import.meta.env.VITE_SERVER}/api/v1/user/current-user`,{
         withCredentials : true
     });
-    // console.log("current user res : ", response.data);
     const user = {
         _id : response.data.currentUser._id,
         username : response.data.currentUser.username,

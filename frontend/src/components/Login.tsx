@@ -10,11 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { FaX } from "react-icons/fa6";
-
-type LoginFormData = {
-    email: string;
-    password: string;
-}
+import { LoginFormData } from "@/types/types";
 
 export default function Login() {
     const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -29,12 +25,16 @@ export default function Login() {
     const onSubmit = async (credentials: LoginFormData) => {
         try {
             const res = await login(credentials);
-            // console.log("res : ", res);
+            console.log("res : ", res);
             if ("data" in res) {
                 toast.success(res.data?.message!);
                 const user = await getCurrentUser();
                 // console.log("user : ", user);
                 dispatch(userExist(user));
+            }
+            if("error" in res){
+                const errMsg = res.error as {data : {message : string}};
+                toast.error(errMsg.data.message);
             }
         } catch (error) {
             toast.error("Login failed, try again");

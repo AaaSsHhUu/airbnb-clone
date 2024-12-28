@@ -26,3 +26,8 @@ export type Review = {
     rating : number;
     author : User | string;
 }
+
+export type LoginFormData = {
+    email : string;
+    password : string;
+}
