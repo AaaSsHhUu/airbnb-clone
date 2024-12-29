@@ -7,16 +7,21 @@ import {
 } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { Button } from "./button";
+
+
+interface NavItems{
+  name : string;
+  link ?: string;
+  icon ?: JSX.Element;
+  action ?: () => void;
+}
 
 export const FloatingNav = ({
   navItems,
   className,
 }: {
-  navItems: {
-    name: string;
-    link: string;
-    icon?: JSX.Element;
-  }[];
+  navItems: NavItems[];
   className?: string;
 }) => {
   const { scrollYProgress } = useScroll();
@@ -59,16 +64,28 @@ export const FloatingNav = ({
           className
         )}
       >
-        {navItems.map((navItem: any, idx: number) => (
-          <Link
-            key={`link=${idx}`}
-            to={navItem.link}
-            className={cn(
-              "relative items-center flex space-x-1 text-neutral-600 px-3 py-3 rounded-full  hover:bg-red-500 hover:text-white"
-            )}
-          >
-            <span className="block text-sm">{navItem.name}</span>
-          </Link>
+        {navItems.map((navItem: NavItems, idx: number) => (
+          <>
+            {(navItem.action) ? 
+              (
+                <Button variant={"secondary"} 
+                  className="relative items-center flex space-x-1 text-neutral-600 px-3 py-3 rounded-full  hover:bg-red-500 hover:text-white font-bold" 
+                  onClick={navItem.action}>
+                  {navItem.name}
+                </Button>
+              )
+              :
+              (<Link
+                key={`link=${idx}`}
+                to={navItem.link || "/"}
+                className={cn(
+                  "relative items-center flex space-x-1 text-neutral-600 px-3 py-3 rounded-full  hover:bg-red-500 hover:text-white"
+                )}
+                >
+                  <span className="block text-sm">{navItem.name}</span>
+              </Link>)
+            }
+          </>
         ))}
       </motion.div>
     </AnimatePresence>

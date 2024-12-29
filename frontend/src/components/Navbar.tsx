@@ -33,7 +33,7 @@ function Navbar() {
   },[dispatch])
 
   const {user} = useSelector((state : RootState) => state.userReducer);
-  console.log("user in store : ", user);
+  // console.log("user in store : ", user);
 
   useEffect(() => {
     // Attach the event listener when the dialog is open
@@ -68,21 +68,18 @@ function Navbar() {
     }
   }
 
-  const navLinks = [
-    {
-      name : "Signup",
-      link : "/signup",
-      // icon : 
-    },
-    {
-      name : "Login",
-      link : "/login",
-    },
-    {
-      name : "Help center",
-      link : "#"
-    },
-  ]
+  const navLinks = user ? 
+    [
+      {name : "Dashboard", link : "/dashboard"},
+      {name : "Home", link : "/"},
+      {name : "Logout", action : handleLogout}
+    ] 
+    : 
+    [
+      {name : "Signup", link : "/signup"},
+      {name : "Login", link : "/login"},
+      {name : "Home", link : "/"}      
+    ]
 
   return (
     <nav className="w-screen relative shadow-md">
@@ -151,7 +148,7 @@ function Navbar() {
               <FaSearch size={22} />
               <input type="text" className="w-full border-none outline-none h-full" placeholder="Where to ?" />
           </div>
-          <FloatingNav  navItems={navLinks}/>
+          <FloatingNav navItems={navLinks}/>
 
           <FilterDrawer />
       </div>
