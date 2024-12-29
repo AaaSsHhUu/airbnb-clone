@@ -4,16 +4,19 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { getCurrentUser, useLoginMutation } from "@/redux/api/userApi"
 import { userExist } from "@/redux/reducer/userReducer"
+import { RootState } from "@/redux/store"
 import { LoginFormData } from "@/types/types"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { FiLoader } from "react-icons/fi"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 
 
 function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>();
+
+    const {user} = useSelector((state : RootState) => state.userReducer);
 
     const [login, { isLoading }] = useLoginMutation();
 
@@ -43,6 +46,9 @@ function Login() {
         }
     }
 
+    if(user){
+        navigate("/");
+    }
 
     return (
         <div className="grid place-content-center h-screen">
