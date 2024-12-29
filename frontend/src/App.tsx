@@ -11,6 +11,7 @@ import { RootState } from "./redux/store";
 import NewListingForm from "./components/NewListingForm";
 import UpdateListingForm from "./components/UpdateListingForm";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
               <Route path="/update-listing/:id" element={<UpdateListingForm />} />
           </Route>
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </Suspense>
       <Footer />

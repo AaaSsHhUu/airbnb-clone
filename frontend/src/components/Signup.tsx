@@ -10,12 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { FaX } from "react-icons/fa6";
-
-type SignupFormData = {
-    username: string;
-    email: string;
-    password: string;
-}
+import { SignupFormData } from "@/types/types";
 
 export default function Signup() {
     const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -68,7 +63,7 @@ export default function Signup() {
                             <Input
                                 id="username"
                                 {...register("username", { required: "Username is required" })}
-                                placeholder="john doe"
+                                placeholder="Johndoe"
                             />
                             {errors.username && <p className="text-red-700 text-sm my-1">{errors.username.message}</p>}
                         </div>
