@@ -143,7 +143,7 @@ function Navbar() {
       </div>
 
       {/* --------------------- For small screens ------------------*/}
-      <div className="md:hidden fixed bg-white top-0 left-0 px-8 py-6 flex items-center justify-between gap-2 w-full cursor-pointer">
+      <div className="z-[999] md:hidden fixed bg-white top-0 left-0 px-8 py-6 flex items-center justify-between gap-2 w-full cursor-pointer">
           <div className="flex items-center gap-2 w-[88%] border rounded-full overflow-hidden px-4 py-3 text-lg shadow-md">
               <FaSearch size={22} />
               <input type="text" className="w-full border-none outline-none h-full" placeholder="Where to ?" />

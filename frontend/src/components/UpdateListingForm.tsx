@@ -76,8 +76,9 @@ function UpdateListingForm() {
     }
 
     return (
-        <div className="min-h-[50vh] mt-28 gap-2 w-3/4 flex mx-auto p-4 lg:w-[65vw]">
-            <div className="max-w-[50%] w-full flex flex-col items-center justify-center px-3">
+        <div className="min-h-[50vh] mt-28 gap-2 w-3/4 flex flex-col md:flex-row mx-auto p-4 lg:w-[65vw]">
+            <h1 className="md:hidden text-center mb-4 font-bold text-xl">Modify Listing</h1>
+            <div className="w-full md:max-w-[50%] flex flex-col items-center justify-center px-3">
                 <img src={imagePreview} alt="listing image" className="rounded-lg" />
                 <div className="mt-4">
                     <Label>Listing Image</Label>
@@ -94,13 +95,13 @@ function UpdateListingForm() {
                     {errors.image && <p className="text-red-700 text-sm my-1">{errors.image.message}</p>}
                 </div>
             </div>
-            <Separator orientation="vertical" className="bg-gray-300 h-auto" />
+            <Separator orientation="vertical" className="bg-gray-300 h-auto hidden md:block" />
             <form 
                 onSubmit={handleSubmit(onSubmit)} 
                 encType="multipart/form-data" 
                 className="w-full px-2 flex flex-col items-center"
             >
-                <h1 className="font-bold text-xl">Modify Listing</h1>
+                <h1 className="hidden md:block font-bold text-xl">Modify Listing</h1>
                 <div className="flex flex-col gap-4 py-4 w-full">
                     <div>
                         <Label>Title</Label>

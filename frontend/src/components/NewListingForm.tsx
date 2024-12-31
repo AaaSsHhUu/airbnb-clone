@@ -72,8 +72,9 @@ function NewListingForm() {
     }
 
     return (
-        <div className="min-h-[50vh] mt-28 gap-2 w-3/4 flex mx-auto p-4 lg:w-[65vw]">
-            <div className="max-w-[50%] w-full flex flex-col items-center justify-center px-3">
+        <div className="min-h-[50vh] mt-28 gap-2 w-3/4 flex flex-col md:flex-row mx-auto p-4 lg:w-[65vw]">
+            <h1 className="md:hidden font-bold text-center mb-4 text-xl">Create Listing</h1>
+            <div className="md:max-w-[50%] w-full flex flex-col items-center justify-center px-3">
                 <img src={imagePreview} alt="listing image" className="rounded-lg" />
                 <div className="mt-4">
                     <Label>Listing Image</Label>
@@ -96,7 +97,7 @@ function NewListingForm() {
                 encType="multipart/form-data" 
                 className="w-full px-2 flex flex-col items-center"
             >
-                <h1 className="font-bold text-xl">Create Listing</h1>
+                <h1 className="hidden md:block font-bold text-xl">Create Listing</h1>
                 <div className="flex flex-col gap-4 py-4 w-full">
                     <div>
                         <Label>Title</Label>

@@ -23,7 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/listing/:id" element={<ListingDetails />} />
-          <Route element={<ProtectedRoute isAuthenticated={user ? true : false} />}>
+          <Route element={<ProtectedRoute isAuthenticated={user ? true : false} redirect="/login" />}>
               <Route path="/new-listing" element={<NewListingForm />} />
               <Route path="/update-listing/:id" element={<UpdateListingForm />} />
           </Route>

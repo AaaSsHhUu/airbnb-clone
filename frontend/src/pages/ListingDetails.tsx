@@ -38,15 +38,15 @@ function ListingDetails() {
     const [deleteListing] = useDeleteListingMutation();
 
     const deleteListingHandler = async () => {
-        const res = await deleteListing({listingId : id || ""});
-        if("data" in res){
+        const res = await deleteListing({ listingId: id || "" });
+        if ("data" in res) {
             toast.success("Listing deleted successfully");
             navigate("/");
         }
         console.log("delete listing res : ", res);
     }
 
-    const editButtonHandler = (listingId : string) => {
+    const editButtonHandler = (listingId: string) => {
         navigate(`/update-listing/${listingId}`);
     }
 
@@ -102,7 +102,7 @@ function ListingDetails() {
     return (
         <div className="mt-24">
             <div className="p-4 max-w-[90%] lg:max-w-[80%] mx-auto flex flex-col gap-4">
-                <div className="flex items-center justify-between w-full px-4">
+                <div className="flex flex-col sm:flex-row items-center justify-between w-full px-4">
                     <h1 className="text-2xl font-bold">
                         {data?.listing.title}
                     </h1>
@@ -110,28 +110,30 @@ function ListingDetails() {
                 </div>
                 <Separator className="bg-gray-400" />
                 {/* Image and details */}
-                <div className="flex justify-between gap-2">
-                    <div className="w-1/2 rounded-lg overflow-hidden">
+                <div className="flex flex-col items-center sm:flex-row sm:items-start justify-between gap-2 relative">
+                    <div className="w-full sm:w-1/2 rounded-lg overflow-hidden">
                         <img src={data?.listing.image.url} alt={data?.listing.title} className="max-h-[25rem] h-full" />
                     </div>
 
-                    <div className="w-1/2 p-4 flex flex-col gap-4 relative">
-                        <p className="opacity-70 italic">{data?.listing.description}</p>
+                    <div className="w-full sm:w-1/2 px-4 flex flex-col gap-4 sm:justify-between">
+                        <div className="flex flex-col gap-4">
+                            <p className="opacity-70 italic">{data?.listing.description}</p>
 
-                        <p className="text-base font-semibold">
-                            <span className="font-bold text-xl">₹ {data?.listing.price}</span> per night
-                        </p>
+                            <p className="text-base font-semibold">
+                                <span className="font-bold text-xl">₹ {data?.listing.price}</span> per night
+                            </p>
 
-                        <p className="flex items-center gap-2 text-base font-semibold">
-                            <BiSolidCategoryAlt size={22} /> {data?.listing.category}
-                        </p>
+                            <p className="flex items-center gap-2 text-base font-semibold">
+                                <BiSolidCategoryAlt size={22} /> {data?.listing.category}
+                            </p>
 
-                        <p className="flex items-center gap-2 text-base font-semibold">
-                            <FaLocationDot size={20} /> {data?.listing.location + ", " + data?.listing.country}
-                        </p>
+                            <p className="flex items-center gap-2 text-base font-semibold">
+                                <FaLocationDot size={20} /> {data?.listing.location + ", " + data?.listing.country}
+                            </p>
+                        </div>
 
                         {(user && user._id === data?.listing.owner) &&
-                            <div className="flex items-center w-full justify-center absolute bottom-0">
+                            <div className="flex items-center w-full justify-center sm:absolute bottom-0 max-w-fit">
                                 <Button className="rounded-r-none" onClick={() => editButtonHandler(id!)}>
                                     <MdOutlineEditNote />Edit
                                 </Button>
@@ -144,10 +146,10 @@ function ListingDetails() {
                 </div>
                 <Separator className="bg-gray-400" />
                 {/* Rating and Reviews */}
-                <div className="flex items-center gap-2 w-full">
+                <div className="flex flex-col md:flex-row items-center gap-2 w-full">
                     {/* Review Form */}
-                    <div className="max-w-[30%] flex flex-col gap-2 items-center w-full">
-                        <h1 className="font-bold text-xl opacity-70">Give your Review</h1>
+                    <div className="w-full sm:max-w-[70%] md:max-w-[30%] flex flex-col gap-2 items-center">
+                        <h1 className="font-bold text-xl opacity-70 my-3">Give your Review</h1>
                         <div className="text-center w-full">
                             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2 items-center">
                                 <Controller
@@ -174,8 +176,8 @@ function ListingDetails() {
                     </div>
 
                     {/* Others Reviews */}
-                    <div className="w-[70%] ml-4">
-                        <h1 className="w-full text-center text-2xl font-bold opacity-70">Reviews from the Guests</h1>
+                    <div className="w-full md:w-[70%] ml-4">
+                        <h1 className="w-full text-center text-lg mt-6 sm:text-2xl font-bold opacity-70">Reviews from the Guests</h1>
                         <InfiniteMovingCards
                             items={reviews}
                             speed="slow"
