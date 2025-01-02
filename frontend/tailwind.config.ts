@@ -1,10 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 
-const colors = require("tailwindcss/colors");
-const {
-  default: flattenColorPalette,
-} = require("tailwindcss/lib/util/flattenColorPalette");
- 
+import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
+
+const colors = import("tailwindcss/colors");
 
 export default {
   darkMode: ["class"],
