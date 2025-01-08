@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
+import tailwindCssAnimate from "tailwindcss-animate";
 
 const colors = import("tailwindcss/colors");
 
@@ -73,7 +74,7 @@ export default {
     },
   },
   plugins: [
-    require("tailwindcss-animate"),
+    tailwindCssAnimate,
     addScrollbarNone,
 	addVariablesForColors
   ],
