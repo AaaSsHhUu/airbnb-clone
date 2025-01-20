@@ -21,18 +21,16 @@ function Navbar() {
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
-        try {
-          const currentUser = await getCurrentUser();
-          dispatch(userExist(currentUser));
-        } catch (error) {
-          console.log("Error fetching current user : ", error);
-        }
+      const currentUser = await getCurrentUser();
+      console.log("current user : ", currentUser);
+
+      dispatch(userExist(currentUser));
+
+      fetchCurrentUser();
     }
+  }, [dispatch])
 
-    fetchCurrentUser();
-  },[dispatch])
-
-  const {user} = useSelector((state : RootState) => state.userReducer);
+  const { user } = useSelector((state: RootState) => state.userReducer);
   // console.log("user in store : ", user);
 
   useEffect(() => {
@@ -49,16 +47,16 @@ function Navbar() {
 
   const [logout] = useLogoutMutation();
   const handleLogout = async () => {
-      await logout(undefined);
-      dispatch(userNotExist());
-      toast.success("Logged out");
-      setIsDialogOpen(false);
+    await logout(undefined);
+    dispatch(userNotExist());
+    toast.success("Logged out");
+    setIsDialogOpen(false);
   }
 
   const handleClickOutside = (event: MouseEvent | Event) => {
     if (
       dialogRef.current &&
-      event.target instanceof Node && 
+      event.target instanceof Node &&
       !dialogRef.current.contains(event.target) &&
       buttonRef.current &&
       !buttonRef.current.contains(event.target)
@@ -68,17 +66,17 @@ function Navbar() {
     }
   }
 
-  const navLinks = user ? 
+  const navLinks = user ?
     [
-      {name : "Dashboard", link : "/dashboard"},
-      {name : "Home", link : "/"},
-      {name : "Logout", action : handleLogout}
-    ] 
-    : 
+      { name: "Dashboard", link: "/dashboard" },
+      { name: "Home", link: "/" },
+      { name: "Logout", action: handleLogout }
+    ]
+    :
     [
-      {name : "Signup", link : "/signup"},
-      {name : "Login", link : "/login"},
-      {name : "Home", link : "/"}      
+      { name: "Signup", link: "/signup" },
+      { name: "Login", link: "/login" },
+      { name: "Home", link: "/" }
     ]
 
   return (
@@ -106,11 +104,11 @@ function Navbar() {
             </button>
           </div>
         </div>
-    
+
         {/* Profile */}
         <div className="flex items-center justify-between gap-3 relative">
           <Link to={"/new-listing"} className="hidden lg:block text-sm font-semibold">
-              {user ? "Create Listing" : "Airbnb your home"}
+            {user ? "Create Listing" : "Airbnb your home"}
           </Link>
           <a href="#" className="hover:bg-gray-200 rounded-full p-2">
             <Globe size={18} />
@@ -127,7 +125,7 @@ function Navbar() {
               <li className="dialog-link"><a href="#">Host an experience</a></li>
               <li className="dialog-link"><a href="#footer">Help centre</a></li>
               {!user && <Separator />}
-              { user ?
+              {user ?
                 <li className="w-full flex justify-center my-2">
                   <Button onClick={handleLogout} variant={"destructive"} className="font-semibold">Logout</Button>
                 </li>
@@ -144,13 +142,13 @@ function Navbar() {
 
       {/* --------------------- For small screens ------------------*/}
       <div className="z-[999] md:hidden fixed bg-white top-0 left-0 px-8 py-6 flex items-center justify-between gap-2 w-full cursor-pointer">
-          <div className="flex items-center gap-2 w-[88%] border rounded-full overflow-hidden px-4 py-3 text-lg shadow-md">
-              <FaSearch size={22} />
-              <input type="text" className="w-full border-none outline-none h-full" placeholder="Where to ?" />
-          </div>
-          <FloatingNav navItems={navLinks}/>
+        <div className="flex items-center gap-2 w-[88%] border rounded-full overflow-hidden px-4 py-3 text-lg shadow-md">
+          <FaSearch size={22} />
+          <input type="text" className="w-full border-none outline-none h-full" placeholder="Where to ?" />
+        </div>
+        <FloatingNav navItems={navLinks} />
 
-          <FilterDrawer />
+        <FilterDrawer />
       </div>
     </nav>
   )
