@@ -12,10 +12,11 @@ export const listingApi = createApi({
         // All listings
         allListing : builder.query<AllListingResponse, AllListingSearchQuery>({
             query : ({category, price}) => {
-                let baseQuery = `/all`
-                if(category && !price) baseQuery += `?category=${category}`;
-                else if(!category && price) baseQuery += `?price=${price}`;
-                else if(category && price) baseQuery += `?category=${category}&price=${price}`;
+                let params = new URLSearchParams();
+                if(category) params.append("category", category);
+                if(price) params.append("price", price.toString());
+                let baseQuery = `/all${params.toString() ? `?${params.toString()}` : ""}`
+                // console.log("base query : ", baseQuery);
                 return {
                     url : baseQuery,
                 }
