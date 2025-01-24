@@ -15,10 +15,21 @@ import reviewRoutes from "./routes/reviewRoutes";
 const app = express();
 connectDB();
 
-app.use(cors({
-    origin : process.env.FRONTEND_SERVER,
+const allowedOrigins = ["http://localhost:5173"]
+
+const corsOptions : cors.CorsOptions = {
+    origin : (origin, callback) => {
+        if(!origin || allowedOrigins.includes(origin)){
+            callback(null, true) // Allow the request
+        }
+        else{
+            callback(new Error("Not allowed by cors")); // Block the request
+        }
+    },
     credentials : true
-}));
+}
+
+app.use(cors(corsOptions));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
