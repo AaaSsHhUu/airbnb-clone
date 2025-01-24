@@ -15,7 +15,7 @@ import reviewRoutes from "./routes/reviewRoutes";
 const app = express();
 connectDB();
 
-const allowedOrigins = ["http://localhost:5173"]
+const allowedOrigins = ["http://localhost:5173", process.env.FRONTEND_SERVER];
 
 const corsOptions : cors.CorsOptions = {
     origin : (origin, callback) => {
