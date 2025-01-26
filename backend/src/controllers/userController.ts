@@ -38,75 +38,80 @@ export const signup = asyncHandler(
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
+      sameSite: "none", // Cross-site cookies are not sent for POST, PUT requests unless SameSite=None is explicitly set
+      secure: process.env.ENVIRONMENT === "production",
     });
 
     res.status(200).json({
-        success : true,
-        message : `Welcome ${newUser.username}`,
-        // accessToken,
-        // newUser
-    })
+      success: true,
+      message: `Welcome ${newUser.username}`,
+      // accessToken,
+      // newUser
+    });
   }
 );
 
-export const login = asyncHandler(async (req : Request, res : Response) => {
-  const {email, password} = req.body;
-  
-  // Zod validation
-  const {success, error} = userSigninSchema.safeParse({email, password});
+export const login = asyncHandler(async (req: Request, res: Response) => {
+  const { email, password } = req.body;
 
-  if(!success){
-    throw new ApiError(400, error.message || "Invalid Inputs")
+  // Zod validation
+  const { success, error } = userSigninSchema.safeParse({ email, password });
+
+  if (!success) {
+    throw new ApiError(400, error.message || "Invalid Inputs");
   }
 
-  const isUserRegistered = await UserModel.findOne({email});
-  
-  if(!isUserRegistered){
+  const isUserRegistered = await UserModel.findOne({ email });
+
+  if (!isUserRegistered) {
     throw new ApiError(404, "User not registered, Please sign-up first");
   }
 
   const isPasswordCorrect = await isUserRegistered.isPasswordCorrect(password);
-  if(!isPasswordCorrect){
+  if (!isPasswordCorrect) {
     throw new ApiError(400, "Invalid email or password");
   }
-  
+
   const accessToken = await isUserRegistered.generateToken();
   // console.log("token after login : ", accessToken);
 
-  res.cookie("accessToken", accessToken , {
-    httpOnly : true,
-    maxAge : 24 * 60 * 60 * 1000,
-  })
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000,
+    sameSite: "none", // Cross-site cookies are not sent for POST, PUT requests unless SameSite=None is explicitly set
+    secure: process.env.ENVIRONMENT === "production",
+  });
 
   return res.status(200).json({
-    success : true,
-    message : `Welcome ${isUserRegistered.username}`,
-    user : isUserRegistered
-  })
+    success: true,
+    message: `Welcome ${isUserRegistered.username}`,
+    user: isUserRegistered,
+  });
+});
 
-})
+export const logout = asyncHandler(async (req: Request, res: Response) => {
+  console.log("req user before log out : ", req.user);
+  console.log("token before log out : ", req.cookies.accessToken);
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+  });
 
-export const logout = asyncHandler(async (req : Request, res : Response) => {
-    console.log("req user before log out : ", req.user);
-    console.log("token before log out : ", req.cookies.accessToken);
-    res.clearCookie("accessToken",{
-      httpOnly : true
-    })
-    
-    req.user = undefined;
+  req.user = undefined;
 
-    return res.status(200).json({
-        success : true,
-        message : "Logged out"
-    })
-})
+  return res.status(200).json({
+    success: true,
+    message: "Logged out",
+  });
+});
 
-export const getCurrentUser = asyncHandler(async (req : Request, res : Response) => {
+export const getCurrentUser = asyncHandler(
+  async (req: Request, res: Response) => {
     const loggedInUser = req.user;
-    if(!loggedInUser){
+    if (!loggedInUser) {
       throw new ApiError(404, "No current User, Login first");
     }
     return res.json({
-        currentUser : loggedInUser
-    })
-})
+      currentUser: loggedInUser,
+    });
+  }
+);
