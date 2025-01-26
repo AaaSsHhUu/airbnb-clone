@@ -39,7 +39,7 @@ export const signup = asyncHandler(
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
       sameSite: "none", // Cross-site cookies are not sent for POST, PUT requests unless SameSite=None is explicitly set
-      secure: process.env.ENVIRONMENT === "production",
+      secure: true,
     });
 
     res.status(200).json({
@@ -74,12 +74,11 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 
   const accessToken = await isUserRegistered.generateToken();
   // console.log("token after login : ", accessToken);
-
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000,
     sameSite: "none", // Cross-site cookies are not sent for POST, PUT requests unless SameSite=None is explicitly set
-    secure: process.env.ENVIRONMENT === "production",
+    secure: true, // cookie is only sent over HTTPS connections.
   });
 
   return res.status(200).json({
@@ -90,8 +89,8 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const logout = asyncHandler(async (req: Request, res: Response) => {
-  console.log("req user before log out : ", req.user);
-  console.log("token before log out : ", req.cookies.accessToken);
+  // console.log("req user before log out : ", req.user);
+  // console.log("token before log out : ", req.cookies.accessToken);
   res.clearCookie("accessToken", {
     httpOnly: true,
   });

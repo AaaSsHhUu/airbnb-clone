@@ -43,7 +43,7 @@ export const userApi = createApi({
 });
 
 export const getCurrentUser = async () => {
-  console.log("getting current user");
+  // console.log("getting current user");
   try {
     const response = await axios.get(
       `${import.meta.env.VITE_SERVER}/api/v1/user/current-user`,
